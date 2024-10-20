@@ -2,14 +2,19 @@
   "name": "03-backendpro",
   "version": "1.0.0",
   "description": "a professional backend",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+   
+    "dev": "nodemon src/index.js"
   },
   "keywords": [
     "JavaScript",
     "Backend"
   ],
   "author": "U Tiwari",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
 }

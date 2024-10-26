@@ -7,7 +7,8 @@ import { app } from "./app.js";
 import connectDB from "./db/index.js";
 
 dotenv.config({
-    path: './env'
+
+    path: './env'  //code is run on env or .env both cases
 })
 
 

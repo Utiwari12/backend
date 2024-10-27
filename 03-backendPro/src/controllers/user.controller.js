@@ -277,11 +277,51 @@ const logoutUser = asyncHandler(async(req, res) =>{
 
     }
   )
+    // to change current password from user
+  const changeCurrentPassword = asyncHandler(
+    async(req, res) => {
+      const {oldPassword, newPassword, confirmedPassword} = req.body
+
+      if (!(newPassword === confirmedPassword)) {
+        throw new ApiError(400, "newPassword and confirmedPassword are not equal")
+      }
+      //check either id or _id
+      const user = await User.findById(req.user?.id)
+      const isPasswordCorrect = await user.
+      isPasswordCorrect(oldPassword)
+
+      if (!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid old password")
+      }
+
+      user.password = newPassword
+      await user.save({validateBeforeSave: false})
+
+      return res
+      .status(200)
+      .json(new ApiResponse
+        (200, {}, "Password Changes Successfully"))
+
+
+    }
+  )
+
+  //get current user
+  const getCurrentUser = asyncHandler(
+    async(req, res) => {
+      return res
+      .status(200)
+      .json(200, req.user, "Current user fetched successfully")
+
+    }
+  )
   
 
 export {
   registerUser,
   loginUser,
   logoutUser,
-  refreshAccessToken
+  refreshAccessToken,
+  changeCurrentPassword,
+  getCurrentUser
 }

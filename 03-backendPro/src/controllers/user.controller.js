@@ -301,8 +301,6 @@ const logoutUser = asyncHandler(async(req, res) =>{
       .status(200)
       .json(new ApiResponse
         (200, {}, "Password Changes Successfully"))
-
-
     }
   )
 
@@ -311,7 +309,11 @@ const logoutUser = asyncHandler(async(req, res) =>{
     async(req, res) => {
       return res
       .status(200)
-      .json(200, req.user, "Current user fetched successfully")
+      .json(new ApiResponse(
+        200,
+        req.user,
+        "User fetched successfully"
+      ))
 
     }
   )
@@ -325,7 +327,7 @@ const logoutUser = asyncHandler(async(req, res) =>{
         throw new ApiError(400, "All fields are required")
       }
       //find the user
-      const user = User.findByIdAndUpdate(
+      const user = await User.findByIdAndUpdate(
         req.user?._id,
         {
           $set: {
@@ -338,8 +340,11 @@ const logoutUser = asyncHandler(async(req, res) =>{
 
       return res
       .status(200)
-      .json(new ApiResponse(200, user, 
-        "Account details updated successfully"))
+      .json(new ApiResponse(
+        200,
+         user, 
+        "Account details updated successfully"
+      ))
 
     }
   )
@@ -417,7 +422,6 @@ const logoutUser = asyncHandler(async(req, res) =>{
       )
     }
   )
-
 
 
 export {

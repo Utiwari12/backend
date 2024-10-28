@@ -13,6 +13,8 @@ const subscriptionSchema = new Schema ({
 
 
 
-export const Subscription = mongoose.model("Subscription",
+export const Subscription = mongoose.model
+(
+    "Subscription",
     subscriptionSchema
 )

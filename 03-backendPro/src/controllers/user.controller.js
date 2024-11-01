@@ -45,7 +45,7 @@ const registerUser = asyncHandler( async (req, res) => {
 
    // get user details from frontend
    const {fullName, email, username, password} = req.body
-   //console.log("email: ", email);
+   console.log("email: ", email);
      
     // validation - not empty
 
@@ -199,8 +199,8 @@ const logoutUser = asyncHandler(async(req, res) =>{
   await User.findByIdAndUpdate(
     req.user._id,
     {
-      $set: {
-        refreshToken: undefined
+      $unset: {
+        refreshToken: 1 //this removes the field from document
       }
     },
     {
@@ -281,11 +281,9 @@ const logoutUser = asyncHandler(async(req, res) =>{
     // to change current password from user
   const changeCurrentPassword = asyncHandler(
     async(req, res) => {
-      const {oldPassword, newPassword, confirmedPassword} = req.body
+      const {oldPassword, newPassword} = req.body
 
-      if (!(newPassword === confirmedPassword)) {
-        throw new ApiError(400, "newPassword and confirmedPassword are not equal")
-      }
+      
       //check either id or _id
       const user = await User.findById(req.user?._id)
       const isPasswordCorrect = await user.
